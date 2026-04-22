@@ -6,10 +6,10 @@ Tools Used
 MySQL
 SQL (Aggregation, Filtering, CASE statements)
 Key Insights
-Office Supplies has the highest frequency of loss-making transactions
-Furniture contributes the highest total loss due to high-value items
-Technology has the highest loss per transaction, indicating a higher risk per sale
-Profitability declines significantly at higher discount levels
+Office Supplies has the highest frequency of loss-making transactions. 
+Furniture contributes the highest total loss due to high-value items. 
+Technology has the highest loss per transaction, indicating a higher risk per sale. 
+Profitability declines significantly at higher discount levels. 
 Key Queries
 Total Sales & Profit
 SELECT SUM(sales), SUM(profit) FROM orders;
