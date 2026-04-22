@@ -20,8 +20,8 @@ SELECT category, COUNT(*), SUM(profit)
 FROM orders
 WHERE profit < 0
 GROUP BY category;
-**Recommendations
-**
+Recommendations
+
 Limit high discounts on expensive items (Furniture, Technology).
 Review pricing strategy for frequently discounted Office Supplies.
 Implement discount thresholds to reduce loss-making transactions.
