@@ -7,8 +7,8 @@ Tools Used
 Microsoft Excel (PivotTables, PivotCharts, Dashboard Design)
 Key Insights
 High revenue does not guarantee profitability
-Furniture generated the 2nd highest sales, but underperformed in profit due to excessive discounting
-Technology is the most efficient category
+Furniture generates high sales but underperforms in profitability due to higher discount levels.
+Technology is the top-performing category, generating both the highest sales and highest profit, indicating strong demand and healthy margins.
 Lower discount exposure resulted in the highest profit contribution
 Critical discount threshold identified (~20%)
 Profitability declines sharply beyond this point and becomes negative at higher discount levels
