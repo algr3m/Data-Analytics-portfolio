@@ -45,3 +45,10 @@ This project demonstrates how customer segmentation can support better business 
 Key Skills Demonstrated
 
 SQL querying and aggregation, data cleaning and preprocessing, customer segmentation using RFM analysis, and translating data findings into business insights.
+
+
+## Dataset Access
+
+The dataset used for this project is publicly available. Due to file size limitations, it is not included in this repository.
+
+You can download it here: https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci
