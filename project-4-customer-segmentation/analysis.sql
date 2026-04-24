@@ -1,19 +1,19 @@
-Customer Segmentation Analysis using SQL
-Project: Online Retail Customer Segmentation
-Tool: MySQL
+-- Customer Segmentation Analysis using SQL
+-- Project: Online Retail Customer Segmentation
+-- Tool: MySQL
 
 USE onlineretail_db;
 
-1. Preview raw dataset
+-- 1. Preview raw dataset
 SELECT *
 FROM online_retail
 LIMIT 10;
 
-2. Check total rows in raw dataset
+-- 2. Check total rows in raw dataset
 SELECT COUNT(*) AS total_rows
 FROM online_retail;
 
-3. Check basic dataset structure
+-- 3. Check basic dataset structure
 SELECT 
     COUNT(DISTINCT `Customer ID`) AS unique_customers,
     COUNT(DISTINCT Invoice) AS unique_invoices,
@@ -21,45 +21,45 @@ SELECT
     MAX(InvoiceDate) AS last_date
 FROM online_retail;
 
-4. Check missing Customer ID rows
+-- 4. Check missing Customer ID rows
 SELECT COUNT(*) AS missing_customer_rows
 FROM online_retail
 WHERE `Customer ID` IS NULL OR `Customer ID` = '';
 
-5. Create a clean table by removing rows with missing Customer ID
+-- 5. Create clean table by removing rows with missing Customer ID
 CREATE TABLE online_retail_clean AS
 SELECT *
 FROM online_retail
 WHERE `Customer ID` IS NOT NULL
 AND `Customer ID` != '';
 
-6. Check negative quantities
+-- 6. Check negative quantities
 SELECT *
 FROM online_retail_clean
 WHERE Quantity < 0;
 
-7. Remove negative quantities
+-- 7. Remove negative quantities
 CREATE TABLE online_retail_clean2 AS
 SELECT *
 FROM online_retail_clean
 WHERE Quantity > 0;
 
-8. Check zero or negative prices
+-- 8. Check zero or negative prices
 SELECT *
 FROM online_retail_clean2
 WHERE Price <= 0;
 
-9. Create final cleaned dataset
+-- 9. Create final cleaned dataset
 CREATE TABLE online_retail_final AS
 SELECT *
 FROM online_retail_clean2
 WHERE Price > 0;
 
-10. Check final clean dataset row count
+-- 10. Check final clean dataset row count
 SELECT COUNT(*) AS clean_total_rows
 FROM online_retail_final;
 
-11. Preview revenue calculation
+-- 11. Preview revenue calculation
 SELECT 
     `Customer ID`,
     Invoice,
@@ -69,7 +69,7 @@ SELECT
 FROM online_retail_final
 LIMIT 10;
 
-12. Customer-level summary
+-- 12. Customer-level summary
 SELECT 
     `Customer ID`,
     COUNT(DISTINCT Invoice) AS total_orders,
@@ -79,7 +79,7 @@ SELECT
 FROM online_retail_final
 GROUP BY `Customer ID`;
 
-13. Customer RFM summary
+-- 13. Create customer RFM table
 CREATE TABLE customer_rfm AS
 SELECT 
     `Customer ID`,
@@ -93,26 +93,26 @@ SELECT
 FROM online_retail_final
 GROUP BY `Customer ID`;
 
-14. Preview RFM table
+-- 14. Preview RFM table
 SELECT *
 FROM customer_rfm
 LIMIT 10;
 
-15. Check spending distribution
+-- 15. Check spending distribution
 SELECT 
     MIN(total_spent) AS min_spent,
     MAX(total_spent) AS max_spent,
     AVG(total_spent) AS avg_spent
 FROM customer_rfm;
 
-16. Check order frequency distribution
+-- 16. Check order frequency distribution
 SELECT 
     MIN(total_orders) AS min_orders,
     MAX(total_orders) AS max_orders,
     AVG(total_orders) AS avg_orders
 FROM customer_rfm;
 
-17. Create RFM scores using quartiles
+-- 17. Create RFM scores using quartiles
 CREATE TABLE customer_rfm_scores AS
 SELECT 
     `Customer ID`,
@@ -124,12 +124,12 @@ SELECT
     NTILE(4) OVER (ORDER BY recency_days ASC) AS recency_score
 FROM customer_rfm;
 
-18. Preview RFM scores
+-- 18. Preview RFM scores
 SELECT *
 FROM customer_rfm_scores
 LIMIT 10;
 
-19. Create final customer segments
+-- 19. Create final customer segments
 CREATE TABLE customer_segments_final AS
 SELECT 
     *,
@@ -141,7 +141,7 @@ SELECT
     END AS segment
 FROM customer_rfm_scores;
 
-20. Final customer segment distribution
+-- 20. Final customer segment distribution
 SELECT 
     segment,
     COUNT(*) AS num_customers,
@@ -150,7 +150,7 @@ FROM customer_segments_final
 GROUP BY segment
 ORDER BY avg_spent DESC;
 
-21. Total spending by segment
+-- 21. Total spending by segment
 SELECT 
     segment,
     COUNT(*) AS num_customers,
@@ -160,25 +160,25 @@ FROM customer_segments_final
 GROUP BY segment
 ORDER BY total_segment_revenue DESC;
 
-22. Top 10 highest spending customers
+-- 22. Top 10 highest spending customers
 SELECT *
 FROM customer_segments_final
 ORDER BY total_spent DESC
 LIMIT 10;
 
-23. At-risk customers
+-- 23. At-risk customers
 SELECT *
 FROM customer_segments_final
 WHERE segment = 'At Risk'
 ORDER BY recency_days DESC;
 
-24. Frequent buyers with upsell potential
+-- 24. Frequent buyers with upsell potential
 SELECT *
 FROM customer_segments_final
 WHERE segment = 'Frequent Buyers'
 ORDER BY total_orders DESC, total_spent DESC;
 
-25. High-value customers
+-- 25. High-value customers
 SELECT *
 FROM customer_segments_final
 WHERE segment = 'High Value'
