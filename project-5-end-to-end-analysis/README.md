@@ -72,7 +72,3 @@ This project demonstrates how combining Excel, SQL, and visualization tools can 
 * Dataset (CSV)
 * Dashboard screenshot
 * README documentation
-
- Author
-
-Emmanuel Grema Allabeh
